@@ -1,25 +1,58 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import './App.css';
+import Navbar from "./components/navbar";
+import Tournament from "./components/tournament";
+import Log from "./components/log";
+import Player from "./components/player";
+import PrivateRoute from "./components/privateRoute";
+import Admin from "./components/admin";
+import checkStorageForUser from "./components/functions/checkStorageForUser";
 
-function App() {
+const baseURL = process.env.NODE_ENV === 'development' ? 
+"http://localhost:9000" : "https://api.playthefade.com";
+
+const axios = require("axios").create({
+  baseURL: baseURL,
+});
+
+export default function App() {
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const { user } = checkStorageForUser();
+    setUser(user);
+  }, []);
+
+  function handleUserChange(user) {
+    setUser(user);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          <code>No more monkeys</code>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar user={user} handleUserChange={handleUserChange}/>
+      <div className="container-fluid">
+        <Routes>
+          <Route path="/" element={<Tournament axios={axios} />} />
+          <Route path="/admin" element={<Admin axios={axios} handleUserChange={handleUserChange} />} />
+          <Route
+            path="/log"
+            element={
+              <PrivateRoute>
+                <Log axios={axios} />
+              </PrivateRoute>
+            }
+            />
+          <Route
+            path="/player"
+            element={
+              <PrivateRoute>
+                <Player axios={axios} />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
-}
-
-export default App;
+};
