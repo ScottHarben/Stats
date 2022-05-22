@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-//require("dotenv").config({ path: '../.env' });
+require("dotenv").config({ path: '../.env' });
+
+console.log(process.env.PORT);
 
 const port = process.env.PORT;
 const host = process.env.VIRTUAL_HOST;
