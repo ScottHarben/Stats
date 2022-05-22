@@ -10,7 +10,7 @@ import Admin from "./components/admin";
 import checkStorageForUser from "./components/functions/checkStorageForUser";
 
 const baseURL = process.env.NODE_ENV === 'development' ? 
-"http://localhost:9000" : "https://api.playthefade.com";
+"http://localhost:9000" : "http://api.playthefade.com";
 
 const axios = require("axios").create({
   baseURL: baseURL,
@@ -31,7 +31,7 @@ export default function App() {
   return (
     <Router>
       <Navbar user={user} handleUserChange={handleUserChange}/>
-      <div className="container-fluid">
+      <div className="container">
         <Routes>
           <Route path="/" element={<Tournament axios={axios} />} />
           <Route path="/admin" element={<Admin axios={axios} handleUserChange={handleUserChange} />} />

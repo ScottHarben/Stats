@@ -14,8 +14,8 @@ export default function Navbar(props){
   }
 
   return(
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div className="container-fluid">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+      <div className="container">
         <Link to="/" className="navbar-brand">
           PLAY THE FADE
         </Link>

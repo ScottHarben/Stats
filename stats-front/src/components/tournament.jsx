@@ -137,36 +137,49 @@ export default function Log({axios}){
 
   return(
     <Fragment>
-      <p className="text-end small text-muted mt-1 mb-0">Tournament data last updated: {pgaLastUpdated}</p>
-      <p className="text-end small text-muted">Projection data last updated: {prizePicksLastUpdated}</p>
-      <Select selectItems={tournamentSelect} label="Tournament" selectId="PermNum" classes="form-control form-control-lg w-auto" handleValueChange={getTournamentStats} />
-      <div className="mt-3 row">
-        <div className="col-lg-3">
-          <Table model={model} data={tournamentScores} label="Strokes" />
-          <label>Median Strokes</label>
-          <div>
-            {checklistStrokes.map((item) => (
-              <span className="me-2">
-                <input type="checkbox" className="btn-check" id={item.Value} checked={item.Checked} onChange={() => handleStrokeMedianChange(item.Value)} autoComplete="off" />
-                <label className="btn btn-outline-primary" htmlFor={item.Value}>{item.Value}</label>
-              </span>
-            ))}
+      {/* <p className="text-end small text-muted mt-1 mb-0">Tournament data last updated: {pgaLastUpdated}</p> */}
+      {/* <p className="text-end small text-muted">Projection data last updated: {prizePicksLastUpdated}</p> */}
+      <h2 className="mt-3 mb-0">Statistics</h2> <span className="text-muted small">updated: {pgaLastUpdated}</span>
+      <div className="row">
+        <div className="col-lg-6">
+          <Select selectItems={tournamentSelect} label="Tournament" selectId="PermNum" classes="form-control" handleValueChange={getTournamentStats} />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-6">
+          <div class="card mt-3">
+            <div class="card-body">
+              <Table model={model} data={tournamentScores} label="Strokes" />
+              <label>Median Strokes</label>
+              <div>
+                {checklistStrokes.map((item) => (
+                  <span>
+                    <input type="checkbox" className="btn-check" id={item.Value} checked={item.Checked} onChange={() => handleStrokeMedianChange(item.Value)} autoComplete="off" />
+                    <label className="btn btn-outline-primary me-2 mb-2" htmlFor={item.Value}>{item.Value}</label>
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-        <div className="col-lg-3">
-          <Table model={model} data={tournamentBoB} label="Birdies Or Better" />
-          <label>Median Birdies Or Better</label>
-          <div>
-            {checklistBoB.map((item) => (
-              <span className="me-2">
-                <input type="checkbox" className="btn-check" id={item.Value} checked={item.Checked} onChange={() => handleBoBMedianChange(item.Value)} autoComplete="off" />
-                <label className="btn btn-outline-primary" htmlFor={item.Value}>{item.Value}</label>
-              </span>
-            ))}
+        <div className="col-lg-6">
+          <div class="card mt-3">
+            <div class="card-body">
+              <Table model={model} data={tournamentBoB} label="Birdies Or Better" />
+              <label>Median Birdies Or Better</label>
+              <div>
+                {checklistBoB.map((item) => (
+                  <span>
+                    <input type="checkbox" className="btn-check" id={item.Value} checked={item.Checked} onChange={() => handleBoBMedianChange(item.Value)} autoComplete="off" />
+                    <label className="btn btn-outline-primary me-2 mb-2" htmlFor={item.Value}>{item.Value}</label>
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <Projections checklistBoB={checklistBoB} checklistStrokes={checklistStrokes} projectionsList={projectionsList} />
+      <Projections checklistBoB={checklistBoB} checklistStrokes={checklistStrokes} projectionsList={projectionsList} prizePicksLastUpdated={prizePicksLastUpdated} />
     </Fragment>
   );
 }

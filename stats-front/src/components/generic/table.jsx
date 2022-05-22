@@ -43,7 +43,7 @@ export default function Table(props){
         <thead>
             <tr>
               {modelFiltered.map((object) => (
-                <th scope="col">{object.columnName}</th>
+                <th scope="col small">{object.columnName}</th>
                 ))}
             </tr>
         </thead>
@@ -51,7 +51,7 @@ export default function Table(props){
           {dataFiltered.map((row) => (
             <tr>
               {model.map((object) => (
-                <td>{row[object.columnName]}</td>
+                <td className="small">{row[object.columnName]}</td>
                 ))}
             </tr>
           ))}

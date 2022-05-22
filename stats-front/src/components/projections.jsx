@@ -2,7 +2,7 @@ import React from "react";
 import Table from "./generic/table";
 
 export default function Projections(props){
-  const {checklistBoB, checklistStrokes, projectionsList} = props;
+  const {checklistBoB, checklistStrokes, projectionsList, prizePicksLastUpdated} = props;
 
   const projectionsFiltered = projectionsList.filter((item) => {
     if (item.StatType === 'Strokes'){
@@ -21,22 +21,84 @@ export default function Projections(props){
     }
   })
 
-  const model = [
-    {columnName: 'FirstName', displayName: 'First Name'},
-    {columnName: 'LastName', displayName: 'Last Name'},
-    {columnName: 'StatType', displayName: 'Stat Type'},
-    {columnName: 'Line'},
-    {columnName: 'OverUnder', displayName: 'Over/Under'},
-    {columnName: 'PossibleMedian', displayName: 'Projected Median'},
-    {columnName: 'L20', displayName: 'Last 20'},
-    {columnName: 'L40', displayName: 'Last 40'},
-    {columnName: 'L80', displayName: 'Last 80'},
-  ]
+  // const model = [
+  //   {columnName: 'FirstName', displayName: 'First Name'},
+  //   {columnName: 'LastName', displayName: 'Last Name'},
+  //   {columnName: 'StatType', displayName: 'Stat Type'},
+  //   {columnName: 'Line'},
+  //   {columnName: 'OverUnder', displayName: 'Over/Under'},
+  //   {columnName: 'PossibleMedian', displayName: 'Projected Median'},
+  //   {columnName: 'L20', displayName: 'Last 20'},
+  //   {columnName: 'L40', displayName: 'Last 40'},
+  //   {columnName: 'L80', displayName: 'Last 80'},
+  // ]
+
+  if (projectionsList.length === 0){
+    return (
+      <div className="mt-3 row">
+        <div className="col-lg-12">
+          <div className="mb-3">
+            <h2 className="mt-3 mb-0">Projections</h2><span className="text-muted small">updated: {prizePicksLastUpdated}</span>
+          </div>
+          <p className="mb-5">PrizePicks lines not available yet.</p>
+        </div>
+      </div>
+    )
+  }
 
   return(
     <div className="mt-3 row">
       <div className="col-lg-12">
-        <Table model={model} data={projectionsFiltered} label="Projections" />
+        {/* <Table model={model} data={projectionsFiltered}/> */}
+        <div className="mb-3">
+          <h2 className="mt-3 mb-0">Projections</h2><span className="text-muted small">updated: {prizePicksLastUpdated}</span>
+        </div>
+        {projectionsFiltered.map((obj) => (
+          <div class="card mb-3">
+            <div class="card-body">
+              <div className="row">
+                <div className="col">
+                  <h6>{obj.FirstName[0]}. {obj.LastName}</h6>
+                </div>
+                <div className="col text-end">
+                  <span className="text-muted small">{obj.StatType}</span>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-4">
+                <span className="text-muted small">Line</span>
+                  <div className="small">
+                    {obj.OverUnder} {obj.Line}
+                  </div>
+                </div>
+                <div className="col">
+                <span className="text-muted small">Proj</span>
+                <div className="small">
+                    {obj.PossibleMedian}
+                  </div>
+                </div>
+                <div className="col">
+                <span className="text-muted small">20</span>
+                <div className="small">
+                    {obj.L20}%
+                  </div>
+                </div>
+                <div className="col">
+                <span className="text-muted small">40</span>
+                <div className="small">
+                    {obj.L40}%
+                  </div>
+                </div>
+                <div className="col">
+                <span className="text-muted small">80</span>
+                <div className="small">
+                    {obj.L80}%
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
