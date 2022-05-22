@@ -10,7 +10,7 @@ import Admin from "./components/admin";
 import checkStorageForUser from "./components/functions/checkStorageForUser";
 
 const baseURL = process.env.NODE_ENV === 'development' ? 
-"http://localhost:9000" : "http://api.playthefade.com";
+"http://localhost:9000" : "https://api.playthefade.com";
 
 const axios = require("axios").create({
   baseURL: baseURL,
