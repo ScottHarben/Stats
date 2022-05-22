@@ -14,5 +14,5 @@ const { apiRouter } = require('./api');
 app.use('/api', apiRouter);
 
 app.listen(port, () => {
-  console.log(`stats-back listening at http://${host}:${port}`);
+  console.log(`stats-back listening at ${host}:${port}`);
 });
