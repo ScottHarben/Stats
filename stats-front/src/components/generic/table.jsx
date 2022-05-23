@@ -42,16 +42,16 @@ export default function Table(props){
       <table className="table table-sm table-hover">
         <thead>
             <tr>
-              {modelFiltered.map((object) => (
-                <th scope="col small">{object.columnName}</th>
+              {modelFiltered.map((object, index) => (
+                <th key={index} scope="col small">{object.columnName}</th>
                 ))}
             </tr>
         </thead>
         <tbody>
-          {dataFiltered.map((row) => (
-            <tr>
-              {model.map((object) => (
-                <td className="small">{row[object.columnName]}</td>
+          {dataFiltered.map((row, index) => (
+            <tr key={index}>
+              {model.map((object, index2) => (
+                <td key={index2} className="small">{row[object.columnName]}</td>
                 ))}
             </tr>
           ))}

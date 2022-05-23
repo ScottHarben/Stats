@@ -137,8 +137,6 @@ export default function Log({axios}){
 
   return(
     <Fragment>
-      {/* <p className="text-end small text-muted mt-1 mb-0">Tournament data last updated: {pgaLastUpdated}</p> */}
-      {/* <p className="text-end small text-muted">Projection data last updated: {prizePicksLastUpdated}</p> */}
       <h2 className="mt-3 mb-0">Statistics</h2> <span className="text-muted small">updated: {pgaLastUpdated}</span>
       <div className="row">
         <div className="col-lg-6">
@@ -147,13 +145,13 @@ export default function Log({axios}){
       </div>
       <div className="row">
         <div className="col-lg-6">
-          <div class="card mt-3">
-            <div class="card-body">
+          <div className="card mt-3">
+            <div className="card-body">
               <Table model={model} data={tournamentScores} label="Strokes" />
               <label>Median Strokes</label>
               <div>
-                {checklistStrokes.map((item) => (
-                  <span>
+                {checklistStrokes.map((item, index) => (
+                  <span key={index}>
                     <input type="checkbox" className="btn-check" id={item.Value} checked={item.Checked} onChange={() => handleStrokeMedianChange(item.Value)} autoComplete="off" />
                     <label className="btn btn-outline-primary me-2 mb-2" htmlFor={item.Value}>{item.Value}</label>
                   </span>
@@ -163,13 +161,13 @@ export default function Log({axios}){
           </div>
         </div>
         <div className="col-lg-6">
-          <div class="card mt-3">
-            <div class="card-body">
+          <div className="card mt-3">
+            <div className="card-body">
               <Table model={model} data={tournamentBoB} label="Birdies Or Better" />
               <label>Median Birdies Or Better</label>
               <div>
-                {checklistBoB.map((item) => (
-                  <span>
+                {checklistBoB.map((item, index) => (
+                  <span key={index}>
                     <input type="checkbox" className="btn-check" id={item.Value} checked={item.Checked} onChange={() => handleBoBMedianChange(item.Value)} autoComplete="off" />
                     <label className="btn btn-outline-primary me-2 mb-2" htmlFor={item.Value}>{item.Value}</label>
                   </span>

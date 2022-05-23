@@ -43,8 +43,8 @@ export default function Navbar(props){
                 </Link>
               </li>
             </ul>
-            <form class="d-flex">
-              <button class="btn btn-primary" type="button" onClick={handleLogout}>Log out</button>
+            <form className="d-flex">
+              <button className="btn btn-primary" type="button" onClick={handleLogout}>Log out</button>
             </form>
           </div>
         </Fragment>}

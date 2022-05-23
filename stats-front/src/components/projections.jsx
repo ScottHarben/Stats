@@ -21,18 +21,6 @@ export default function Projections(props){
     }
   })
 
-  // const model = [
-  //   {columnName: 'FirstName', displayName: 'First Name'},
-  //   {columnName: 'LastName', displayName: 'Last Name'},
-  //   {columnName: 'StatType', displayName: 'Stat Type'},
-  //   {columnName: 'Line'},
-  //   {columnName: 'OverUnder', displayName: 'Over/Under'},
-  //   {columnName: 'PossibleMedian', displayName: 'Projected Median'},
-  //   {columnName: 'L20', displayName: 'Last 20'},
-  //   {columnName: 'L40', displayName: 'Last 40'},
-  //   {columnName: 'L80', displayName: 'Last 80'},
-  // ]
-
   if (projectionsList.length === 0){
     return (
       <div className="mt-3 row">
@@ -49,13 +37,12 @@ export default function Projections(props){
   return(
     <div className="mt-3 row">
       <div className="col-lg-12">
-        {/* <Table model={model} data={projectionsFiltered}/> */}
         <div className="mb-3">
           <h2 className="mt-3 mb-0">Projections</h2><span className="text-muted small">updated: {prizePicksLastUpdated}</span>
         </div>
-        {projectionsFiltered.map((obj) => (
-          <div class="card mb-3">
-            <div class="card-body">
+        {projectionsFiltered.map((obj,index) => (
+          <div key={obj.PlayerId+index} className="card mb-3">
+            <div className="card-body">
               <div className="row">
                 <div className="col">
                   <h6>{obj.FirstName[0]}. {obj.LastName}</h6>
