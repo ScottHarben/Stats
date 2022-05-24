@@ -64,7 +64,7 @@ export default function Admin(props) {
       ) : (
         <div></div>
       )}
-      <div className="card w-25 mt-5 mx-auto" style={{ maxWidth: "400px" }}>
+      <div className="card w-25 mt-5 mx-auto login-card">
         <div className="card-body">
           <h5 className="card-title mb-3">Log in</h5>
           <form onSubmit={login}>

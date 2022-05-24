@@ -87,7 +87,7 @@ export default function Player({axios}){
 
   return(
     <div className="mt-3 row w-auto">
-      <div className="col-lg-4">
+      <div className="col-lg-4 mb-5">
         <div className="form-group">
           <label htmlFor="playerSearch">Unassigned Players</label>
           <input type="text" className="form-control" id="playerSearch" placeholder="Enter player" onChange={getUnassignedSearch} />
@@ -103,7 +103,7 @@ export default function Player({axios}){
         </ul>
         <small id="playerSearchListHelp" className="form-text text-muted">{showingText}</small> 
       </div>
-      <div className="col-lg-4">
+      <div className="col-lg-4 mb-5">
         <div className="form-group">
           <label htmlFor="playerSearch">PGA Players</label>
           <input type="text" className="form-control" id="playerSearch" placeholder="Enter player" onChange={getPGAPlayerSearch} />
@@ -119,7 +119,7 @@ export default function Player({axios}){
         </ul>
         <small id="playerSearchListHelp" className="form-text text-muted">{uaShowingText}</small> 
       </div>
-      <div className="col-lg-4">
+      <div className="col-lg-4 mb-5">
         <div className="card">
           <div className="card-body">
             <p>Prize Picks: <span>{prizePicksPlayer.Name}</span></p>

@@ -7,6 +7,7 @@ import Log from "./components/log";
 import Player from "./components/player";
 import PrivateRoute from "./components/privateRoute";
 import Admin from "./components/admin";
+import Footer from "./components/footer";
 import checkStorageForUser from "./components/functions/checkStorageForUser";
 
 const baseURL = process.env.NODE_ENV === 'development' ? 
@@ -30,29 +31,32 @@ export default function App() {
 
   return (
     <Router>
-      <Navbar user={user} handleUserChange={handleUserChange}/>
-      <div className="container">
-        <Routes>
-          <Route path="/" element={<Tournament axios={axios} />} />
-          <Route path="/admin" element={<Admin axios={axios} handleUserChange={handleUserChange} />} />
-          <Route
-            path="/log"
-            element={
-              <PrivateRoute>
-                <Log axios={axios} />
-              </PrivateRoute>
-            }
-            />
-          <Route
-            path="/player"
-            element={
-              <PrivateRoute>
-                <Player axios={axios} />
-              </PrivateRoute>
-            }
-          />
-        </Routes>
-      </div>
+        <div className="content-inside">
+          <Navbar user={user} handleUserChange={handleUserChange}/>
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Tournament axios={axios} />} />
+              <Route path="/admin" element={<Admin axios={axios} handleUserChange={handleUserChange} />} />
+              <Route
+                path="/log"
+                element={
+                  <PrivateRoute>
+                    <Log axios={axios} />
+                  </PrivateRoute>
+                }
+                />
+              <Route
+                path="/player"
+                element={
+                  <PrivateRoute>
+                    <Player axios={axios} />
+                  </PrivateRoute>
+                }
+                />
+            </Routes>
+          </div>
+        </div>
+      <Footer />
     </Router>
   );
 };
