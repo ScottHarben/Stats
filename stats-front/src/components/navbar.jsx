@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import logo from '../assets/ptf.png'
 
 export default function Navbar(props){
   const { user, handleUserChange } = props;
@@ -22,7 +23,7 @@ export default function Navbar(props){
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container">
         <Link to="/" className="navbar-brand" onClick={handleLinkClick}>
-          PLAY THE FADE
+          <img src={logo} alt="" className="logo" />
         </Link>
         {user.username === undefined ? 
         <Fragment></Fragment> : 

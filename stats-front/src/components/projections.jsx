@@ -34,6 +34,19 @@ export default function Projections(props){
     )
   }
 
+  if (projectionsFiltered.length === 0){
+    return(
+      <div className="mt-3 row">
+        <div className="col-lg-12">
+          <div className="mb-3">
+            <h2 className="mt-3 mb-0">Projections</h2><span className="text-muted small">updated: {prizePicksLastUpdated}</span>
+          </div>
+          <p className="mb-5">Select projected median values to see projections.</p>
+        </div>
+      </div>
+    )
+  }
+
   return(
     <div className="mt-3 row">
       <div className="col-lg-12">
