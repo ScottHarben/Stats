@@ -19,10 +19,16 @@ export default function Navbar(props){
     handleNavCollapse();
   }
 
+  function handleLogoClick() {
+    if (!isNavCollapsed){
+      handleNavCollapse();
+    }
+  }
+
   return(
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container">
-        <Link to="/" className="navbar-brand" onClick={handleLinkClick}>
+        <Link to="/" className="navbar-brand" onClick={handleLogoClick}>
           <img src={logo} alt="" className="logo" />
         </Link>
         {user.username === undefined ? 
