@@ -128,9 +128,6 @@ export default function Log({axios}){
     }
   }
   
-console.log(checklistBoB)
-console.log(checklistStrokes)
-
   return(
     <Fragment>
       <h2 className="mt-3 mb-0">Statistics</h2> <span className="text-muted small">updated: {pgaLastUpdated}</span>
@@ -143,8 +140,7 @@ console.log(checklistStrokes)
         <div className="col-lg-6">
           <div className="card mt-3">
             <div className="card-body">
-              <Table model={model} data={tournamentScores} label="Strokes" />
-              <label>Median Strokes</label>
+              <Table model={model} data={tournamentScores} label="Median Strokes" />
               <div>
                 {checklistStrokes.map((item, index) => (
                   <span key={index}>
@@ -159,8 +155,7 @@ console.log(checklistStrokes)
         <div className="col-lg-6">
           <div className="card mt-3">
             <div className="card-body">
-              <Table model={model} data={tournamentBoB} label="Birdies Or Better" />
-              <label>Median Birdies Or Better</label>
+              <Table model={model} data={tournamentBoB} label="Median Birdies Or Better" />
               <div>
                 {checklistBoB.map((item, index) => (
                   <span key={index}>
