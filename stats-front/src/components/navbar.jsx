@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 export default function Navbar(props){
   const { user, handleUserChange } = props;
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+  const [linkedClicked, setLinkClicked] = useState()
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
@@ -13,10 +14,14 @@ export default function Navbar(props){
     handleUserChange({});
   }
 
+  function handleLinkClick() {
+    handleNavCollapse();
+  }
+
   return(
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container">
-        <Link to="/" className="navbar-brand">
+        <Link to="/" className="navbar-brand" onClick={handleLinkClick}>
           PLAY THE FADE
         </Link>
         {user.username === undefined ? 
@@ -28,17 +33,17 @@ export default function Navbar(props){
           <div className={`${isNavCollapsed ? 'collapse' : ''}  navbar-collapse`} id="navbarTogglerDemo02">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item active">
-                <Link to="/" className="nav-link">
+                <Link to="/" className="nav-link" onClick={handleLinkClick}>
                   Tournament
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/log" className="nav-link">
+                <Link to="/log" className="nav-link" onClick={handleLinkClick}>
                   Logs
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/player" className="nav-link">
+                <Link to="/player" className="nav-link" onClick={handleLinkClick}>
                   Players
                 </Link>
               </li>
