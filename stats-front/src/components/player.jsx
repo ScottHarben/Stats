@@ -91,7 +91,7 @@ export default function Player({axios}){
         <div className="form-group">
           <label htmlFor="playerSearch">Unassigned Players</label>
           <input type="text" className="form-control" id="playerSearch" placeholder="Enter player" onChange={getUnassignedSearch} />
-          <small id="playerSearchHelp" className="form-text text-muted">Start typing to select a player.</small>          
+          <small id="playerSearchHelp" className="form-text text-muted">Start typing to filter list.</small>          
         </div>
         <ul className="list-group mt-3">
           {playerUnassignedList.slice(0,5).map((player) => (
@@ -107,7 +107,7 @@ export default function Player({axios}){
         <div className="form-group">
           <label htmlFor="playerSearch">PGA Players</label>
           <input type="text" className="form-control" id="playerSearch" placeholder="Enter player" onChange={getPGAPlayerSearch} />
-          <small id="playerSearchHelp" className="form-text text-muted">Start typing to select a player.</small>          
+          <small id="playerSearchHelp" className="form-text text-muted">Start typing to filter list.</small>          
         </div>
         <ul className="list-group mt-3">
           {pgaPlayerList.slice(0,5).map((player) => (

@@ -128,12 +128,8 @@ export default function Log({axios}){
     }
   }
   
-  let projectionsView = <Fragment/>
-  if (projectionsList.length === 0) {
-    projectionsView = <div>PrizePicks PGA lines not listed yet</div>
-  } else {
-    projectionsView = <Projections checklistBoB={checklistBoB} checklistStrokes={checklistStrokes} projectionsList={projectionsList} />
-  }
+console.log(checklistBoB)
+console.log(checklistStrokes)
 
   return(
     <Fragment>
