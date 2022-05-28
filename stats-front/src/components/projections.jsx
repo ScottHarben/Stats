@@ -53,8 +53,8 @@ export default function Projections(props){
         <div className="mb-3">
           <h2 className="mt-3 mb-0">Projections</h2><span className="text-muted small">updated: {prizePicksLastUpdated}</span>
         </div>
-        {projectionsFiltered.map((obj,index) => (
-          <div key={index} className="card mb-3">
+        {projectionsFiltered.map((obj) => (
+          <div key={obj.PrizePicksProjectionId} className="card mb-3">
             <div className="card-body">
               <div className="row">
                 <div className="col">
