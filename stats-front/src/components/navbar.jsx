@@ -5,7 +5,6 @@ import logo from '../assets/ptf.png'
 export default function Navbar(props){
   const { user, handleUserChange } = props;
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
-  const [linkedClicked, setLinkClicked] = useState()
 
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 

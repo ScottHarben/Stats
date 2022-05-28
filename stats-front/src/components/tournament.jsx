@@ -16,6 +16,7 @@ export default function Log({axios}){
   const [checklistStrokes, setChecklistStrokes] = useState([]);
   const [checklistBoB, setChecklistBoB] = useState([]);
   const [logs, setLogs] = useState([]);
+  const [selectPermNum, setSelectPermNum] = useState();
 
 
 
@@ -24,7 +25,13 @@ export default function Log({axios}){
       try {
         //api
         const selectResult = await axios.get("/api/tournament/select");
-        const permNum = selectResult.data[0].Value;
+        const sessionPermNum = sessionStorage.getItem("permNum");
+        let permNum = "";
+        if (sessionPermNum) {
+          permNum = sessionPermNum
+        } else {
+          permNum = selectResult.data[0].Value;
+        }
         const scoreResult = await axios.get("/api/tournament/medianscore", { params: {permNum: permNum}});
         const bobResult = await axios.get("/api/tournament/medianbob", { params: {permNum: permNum}});
         const projectionsResult = await axios.get("/api/tournament/getprojections");
@@ -34,6 +41,7 @@ export default function Log({axios}){
         setTournamentBoB(bobResult.data);
         setProjectionsList(projectionsResult.data);
         setLogs(logResult.data);
+        setSelectPermNum(permNum);
         
         //not api
         const possibleMedianScoreRange = getPossibleMedianScores(scoreResult.data);
@@ -41,12 +49,24 @@ export default function Log({axios}){
         const startValues = getStartValues(scoreResult.data, bobResult.data);
         const scoreRange = lodash.range(possibleMedianScoreRange.Min,possibleMedianScoreRange.Max+1);
         const bobRange = lodash.range(possibleMedianBoBRange.Min,possibleMedianBoBRange.Max+1);
-        const scoreRangeChecks = scoreRange.map((value) => (
-          {Value: value, Checked: value === startValues.InitialStrokes}
-        ));
-        const bobRangeChecks = bobRange.map((value) => (
-          {Value: value, Checked: value === startValues.InitialBoB}
-        ));
+        const sessionChecklistStrokes = sessionStorage.getItem("checklistStrokes");
+        let scoreRangeChecks = [];
+        if (sessionChecklistStrokes) {
+          scoreRangeChecks = JSON.parse(sessionChecklistStrokes);
+        } else {
+          scoreRangeChecks = scoreRange.map((value) => (
+            {Value: value, Checked: value === startValues.InitialStrokes}
+          ));
+        }
+        const sessionChecklistBoB = sessionStorage.getItem("checklistBoB");
+        let bobRangeChecks = [];
+        if (sessionChecklistBoB) {
+          bobRangeChecks = JSON.parse(sessionChecklistBoB);
+        } else {
+          bobRangeChecks = bobRange.map((value) => (
+            {Value: value, Checked: value === startValues.InitialBoB}
+          ));
+        }
         setChecklistStrokes(scoreRangeChecks);
         setChecklistBoB(bobRangeChecks);
       } catch (error) {
@@ -57,6 +77,8 @@ export default function Log({axios}){
 
   async function getTournamentStats(permNum) {
     try {
+      sessionStorage.setItem("permNum", permNum);
+
       //api
       const scoreResult = await axios.get("/api/tournament/medianscore", { params: {permNum: permNum}});
       const bobResult = await axios.get("/api/tournament/medianbob", { params: {permNum: permNum}});
@@ -75,9 +97,10 @@ export default function Log({axios}){
       const bobRangeChecks = bobRange.map((value) => (
         {Value: value, Checked: value === startValues.InitialBoB}
       ));
-      console.log(scoreRangeChecks)
       setChecklistStrokes(scoreRangeChecks);
       setChecklistBoB(bobRangeChecks);
+      sessionStorage.removeItem("checklistStrokes");
+      sessionStorage.removeItem("checklistBoB");
     } catch (error) {
       //console.error(error.response.data);
     }
@@ -91,6 +114,7 @@ export default function Log({axios}){
     const currentChecked = newChecklist[objIndex].Checked;
     newChecklist[objIndex].Checked = !currentChecked;
     setChecklistStrokes(newChecklist);
+    sessionStorage.setItem("checklistStrokes", JSON.stringify(newChecklist));
   }
 
   function handleBoBMedianChange(value){
@@ -101,6 +125,7 @@ export default function Log({axios}){
     const currentChecked = newChecklist[objIndex].Checked;
     newChecklist[objIndex].Checked = !currentChecked;
     setChecklistBoB(newChecklist);
+    sessionStorage.setItem("checklistBoB", JSON.stringify(newChecklist));
   }
 
   const model = [
@@ -133,7 +158,7 @@ export default function Log({axios}){
       <h2 className="mt-3 mb-0">Statistics</h2> <span className="text-muted small">updated: {pgaLastUpdated}</span>
       <div className="row">
         <div className="col-lg-6">
-          <Select selectItems={tournamentSelect} label="Tournament" selectId="PermNum" classes="form-control" handleValueChange={getTournamentStats} />
+          <Select selectItems={tournamentSelect} selected={selectPermNum} label="Tournament" selectId="PermNum" classes="form-control" handleValueChange={getTournamentStats} />
         </div>
       </div>
       <div className="row">
