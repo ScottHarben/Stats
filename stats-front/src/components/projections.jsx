@@ -1,22 +1,50 @@
-import React from "react";
-import Table from "./generic/table";
+import React, { useState } from "react";
 
 export default function Projections(props){
-  const {checklistBoB, checklistStrokes, projectionsList, prizePicksLastUpdated} = props;
+  const {checklistBoB, checklistStrokes, projectionsList, prizePicksLastUpdated, statTypeFilters, lineTypeFilters,
+          handleStatTypeFilterChange, handleLineTypeFilterChange} = props;
+
+  function statTypeFilterChange(value){
+    handleStatTypeFilterChange(value);
+  }
+
+  function lineTypeFilterChange(value){
+    handleLineTypeFilterChange(value);
+  }
 
   const projectionsFiltered = projectionsList.filter((item) => {
-    if (item.StatType === 'Strokes'){
-      const objIndex = checklistStrokes.findIndex((obj) => obj.Value === item.PossibleMedian);
-      if (objIndex !== -1){
-        const checked = checklistStrokes[objIndex].Checked;
-        return checked;
+    const strokesFilterCheck = statTypeFilters.filter(x => x.Value === 'Strokes')[0];
+    const bobFilterCheck = statTypeFilters.filter(x => x.Value === 'Birdies Or Better')[0];
+    const overFilterCheck = lineTypeFilters.filter(x => x.Value === 'Over')[0];
+    const underFilterCheck = lineTypeFilters.filter(x => x.Value === 'Under')[0];
+    if (statTypeFilters.length > 0 && lineTypeFilters.length > 0) {
+      if (item.StatType === 'Strokes' && strokesFilterCheck.Checked){
+        const objIndex = checklistStrokes.findIndex((obj) => obj.Value === item.PossibleMedian);
+        if (objIndex !== -1){
+          const checked = checklistStrokes[objIndex].Checked;
+          if (checked){
+            if (item.OverUnder === 'Over' && overFilterCheck.Checked){
+              return checked;
+            }
+            if (item.OverUnder === 'Under' && underFilterCheck.Checked){
+              return checked;
+            }
+          }
+        }
       }
-    }
-    if (item.StatType === 'Birdies Or Better'){
-      const objIndex = checklistBoB.findIndex((obj) => obj.Value === item.PossibleMedian);
-      if (objIndex !== -1){
-        const checked = checklistBoB[objIndex].Checked;
-        return checked;
+      if (item.StatType === 'Birdies Or Better' && bobFilterCheck.Checked){
+        const objIndex = checklistBoB.findIndex((obj) => obj.Value === item.PossibleMedian);
+        if (objIndex !== -1){
+          const checked = checklistBoB[objIndex].Checked;
+          if (checked){
+            if (item.OverUnder === 'Over' && overFilterCheck.Checked){
+              return true;
+            }
+            if (item.OverUnder === 'Under' && underFilterCheck.Checked){
+              return true
+            }
+          }
+        }
       }
     }
   })
@@ -41,7 +69,25 @@ export default function Projections(props){
           <div className="mb-3">
             <h2 className="mt-3 mb-0">Projections</h2><span className="text-muted small">updated: {prizePicksLastUpdated}</span>
           </div>
-          <p className="mb-5">Select projected median values to see projections.</p>
+          <div className="mb-2">
+            <div className="d-inline-block">
+              {statTypeFilters.map((obj) => (
+                <span key={obj.Value}>
+                  <input type="checkbox" className="btn-check" id={obj.Value} checked={obj.Checked} autoComplete="off" onChange={() => statTypeFilterChange(obj.Value)} />
+                  <label className="btn btn-outline-primary me-2 mb-2" htmlFor={obj.Value}>{obj.Value}</label>
+                </span>
+              ))}
+            </div>
+            <div className="d-inline-block">
+              {lineTypeFilters.map((obj) => (
+                <span key={obj.Value}>
+                  <input type="checkbox" className="btn-check" id={obj.Value} checked={obj.Checked} autoComplete="off" onChange={() => lineTypeFilterChange(obj.Value)} />
+                  <label className="btn btn-outline-primary me-2 mb-2" htmlFor={obj.Value}>{obj.Value}</label>
+                </span>
+              ))}
+            </div>
+          </div>
+          <p className="mb-5">Select projected median values and check your filters to see projections.</p>
         </div>
       </div>
     )
@@ -52,6 +98,24 @@ export default function Projections(props){
       <div className="col-lg-12">
         <div className="mb-3">
           <h2 className="mt-3 mb-0">Projections</h2><span className="text-muted small">updated: {prizePicksLastUpdated}</span>
+        </div>
+        <div className="mb-2">
+          <div className="d-inline-block">
+            {statTypeFilters.map((obj) => (
+              <span key={obj.Value}>
+                <input type="checkbox" className="btn-check" id={obj.Value} checked={obj.Checked} autoComplete="off" onChange={() => statTypeFilterChange(obj.Value)} />
+                <label className="btn btn-outline-primary me-2 mb-2" htmlFor={obj.Value}>{obj.Value}</label>
+              </span>
+            ))}
+          </div>
+          <div className="d-inline-block">
+            {lineTypeFilters.map((obj) => (
+              <span key={obj.Value}>
+                <input type="checkbox" className="btn-check" id={obj.Value} checked={obj.Checked} autoComplete="off" onChange={() => lineTypeFilterChange(obj.Value)} />
+                <label className="btn btn-outline-primary me-2 mb-2" htmlFor={obj.Value}>{obj.Value}</label>
+              </span>
+            ))}
+          </div>
         </div>
         {projectionsFiltered.map((obj) => (
           <div key={obj.PrizePicksProjectionId} className="card mb-3">

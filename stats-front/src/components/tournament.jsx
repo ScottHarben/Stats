@@ -17,7 +17,8 @@ export default function Log({axios}){
   const [checklistBoB, setChecklistBoB] = useState([]);
   const [logs, setLogs] = useState([]);
   const [selectPermNum, setSelectPermNum] = useState();
-
+  const [statTypeFilters, setStatTypeFilters] = useState([]);
+  const [lineTypeFilters, setLineTypeFilters] = useState([]);
 
 
   useEffect(() => {
@@ -69,6 +70,14 @@ export default function Log({axios}){
         }
         setChecklistStrokes(scoreRangeChecks);
         setChecklistBoB(bobRangeChecks);
+        setStatTypeFilters([
+          {Value: 'Strokes', Checked: true},
+          {Value: 'Birdies Or Better', Checked: true}
+        ])
+        setLineTypeFilters([
+          {Value: 'Over', Checked: true},
+          {Value: 'Under', Checked: true}
+        ])
       } catch (error) {
         //handleError(error);
       }
@@ -126,6 +135,28 @@ export default function Log({axios}){
     newChecklist[objIndex].Checked = !currentChecked;
     setChecklistBoB(newChecklist);
     sessionStorage.setItem("checklistBoB", JSON.stringify(newChecklist));
+  }
+
+  function handleStatTypeFilterChange(value){
+    const newChecklist = statTypeFilters.map((obj) => (
+      {Value: obj.Value, Checked: obj.Checked}
+    ));
+    const objIndex = newChecklist.findIndex((obj) => obj.Value === value);
+    const currentChecked = newChecklist[objIndex].Checked;
+    newChecklist[objIndex].Checked = !currentChecked;
+    setStatTypeFilters(newChecklist);
+    // sessionStorage.setItem("checklistBoB", JSON.stringify(newChecklist));
+  }
+
+  function handleLineTypeFilterChange(value){
+    const newChecklist = lineTypeFilters.map((obj) => (
+      {Value: obj.Value, Checked: obj.Checked}
+    ));
+    const objIndex = newChecklist.findIndex((obj) => obj.Value === value);
+    const currentChecked = newChecklist[objIndex].Checked;
+    newChecklist[objIndex].Checked = !currentChecked;
+    setLineTypeFilters(newChecklist);
+    // sessionStorage.setItem("checklistBoB", JSON.stringify(newChecklist));
   }
 
   const model = [
@@ -193,7 +224,16 @@ export default function Log({axios}){
           </div>
         </div>
       </div>
-      <Projections checklistBoB={checklistBoB} checklistStrokes={checklistStrokes} projectionsList={projectionsList} prizePicksLastUpdated={prizePicksLastUpdated} />
+      <Projections 
+        checklistBoB={checklistBoB} 
+        checklistStrokes={checklistStrokes} 
+        projectionsList={projectionsList} 
+        prizePicksLastUpdated={prizePicksLastUpdated}
+        statTypeFilters={statTypeFilters} 
+        lineTypeFilters={lineTypeFilters} 
+        handleStatTypeFilterChange={handleStatTypeFilterChange}
+        handleLineTypeFilterChange={handleLineTypeFilterChange}
+      />
     </Fragment>
   );
 }
