@@ -77,6 +77,14 @@ export default function Player({axios}){
     }
   }
 
+  async function rebuildProjections() {
+    try {
+      await axios.post("/api/player/rebuildprojections", null, { headers: authHeader() });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const playerCount = playerUnassignedList.length;
   const showingCount = playerUnassignedList.length > 5 ? 5 : playerUnassignedList.length;
   const showingText = playerUnassignedList.length === 0 ? '' : `Showing ${showingCount} of ${playerCount} results`;
@@ -127,6 +135,7 @@ export default function Player({axios}){
             <button href="#" className="btn btn-primary" onClick={() => assignPlayer(pgaPlayer.PlayerId, prizePicksPlayer.PrizePicksPlayerId)}>Submit</button>
           </div>
         </div> 
+        <button className="btn btn-primary mt-3" onClick={() => rebuildProjections()}>Rebuild Projections</button>
       </div>
     </div>
   );

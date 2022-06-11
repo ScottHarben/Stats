@@ -24,7 +24,6 @@ export default function Log({axios}){
   useEffect(() => {
     (async function () {
       try {
-        //api
         const selectResult = await axios.get("/api/tournament/select");
         const sessionPermNum = sessionStorage.getItem("permNum");
         let permNum = "";
@@ -44,7 +43,6 @@ export default function Log({axios}){
         setLogs(logResult.data);
         setSelectPermNum(permNum);
         
-        //not api
         const possibleMedianScoreRange = getPossibleMedianScores(scoreResult.data);
         const possibleMedianBoBRange = getPossibleMedianBoB(bobResult.data);
         const startValues = getStartValues(scoreResult.data, bobResult.data);
@@ -70,14 +68,29 @@ export default function Log({axios}){
         }
         setChecklistStrokes(scoreRangeChecks);
         setChecklistBoB(bobRangeChecks);
-        setStatTypeFilters([
-          {Value: 'Strokes', Checked: true},
-          {Value: 'Birdies Or Better', Checked: true}
-        ])
-        setLineTypeFilters([
-          {Value: 'Over', Checked: true},
-          {Value: 'Under', Checked: true}
-        ])
+        
+        const sessionStatTypeFilter = sessionStorage.getItem("statTypeFilter");
+        let statTypeChecks = [];
+        if (sessionStatTypeFilter) {
+          statTypeChecks = JSON.parse(sessionStatTypeFilter);
+        } else {
+          statTypeChecks = [
+            {Value: 'Strokes', Checked: true},
+            {Value: 'Birdies Or Better', Checked: true}
+          ];
+        }
+        const sessionLineTypeFilter = sessionStorage.getItem("lineTypeFilter");
+        let lineTypeChecks = [];
+        if (sessionLineTypeFilter) {
+          lineTypeChecks = JSON.parse(sessionLineTypeFilter);
+        } else {
+          lineTypeChecks = [
+            {Value: 'Over', Checked: true},
+            {Value: 'Under', Checked: true}
+          ];
+        }
+        setStatTypeFilters(statTypeChecks)
+        setLineTypeFilters(lineTypeChecks)
       } catch (error) {
         //handleError(error);
       }
@@ -88,13 +101,11 @@ export default function Log({axios}){
     try {
       sessionStorage.setItem("permNum", permNum);
 
-      //api
       const scoreResult = await axios.get("/api/tournament/medianscore", { params: {permNum: permNum}});
       const bobResult = await axios.get("/api/tournament/medianbob", { params: {permNum: permNum}});
       setTournamentScores(scoreResult.data);
       setTournamentBoB(bobResult.data);
 
-      //not api
       const possibleMedianScoreRange = getPossibleMedianScores(scoreResult.data);
       const possibleMedianBoBRange = getPossibleMedianBoB(bobResult.data);
       const startValues = getStartValues(scoreResult.data, bobResult.data);
@@ -110,6 +121,8 @@ export default function Log({axios}){
       setChecklistBoB(bobRangeChecks);
       sessionStorage.removeItem("checklistStrokes");
       sessionStorage.removeItem("checklistBoB");
+      sessionStorage.removeItem("statTypeFilter");
+      sessionStorage.removeItem("lineTypeFilter");
     } catch (error) {
       //console.error(error.response.data);
     }
@@ -145,7 +158,7 @@ export default function Log({axios}){
     const currentChecked = newChecklist[objIndex].Checked;
     newChecklist[objIndex].Checked = !currentChecked;
     setStatTypeFilters(newChecklist);
-    // sessionStorage.setItem("checklistBoB", JSON.stringify(newChecklist));
+    sessionStorage.setItem("statTypeFilter", JSON.stringify(newChecklist));
   }
 
   function handleLineTypeFilterChange(value){
@@ -156,7 +169,7 @@ export default function Log({axios}){
     const currentChecked = newChecklist[objIndex].Checked;
     newChecklist[objIndex].Checked = !currentChecked;
     setLineTypeFilters(newChecklist);
-    // sessionStorage.setItem("checklistBoB", JSON.stringify(newChecklist));
+    sessionStorage.setItem("lineTypeFilter", JSON.stringify(newChecklist));
   }
 
   const model = [

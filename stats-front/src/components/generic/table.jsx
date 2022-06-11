@@ -5,17 +5,17 @@ export default function Table(props){
   let modelFiltered = [];
   let dataFiltered = [];
 
-  model.map((object) => {
+  for (const object of model) {
     if (object.hasOwnProperty('displayName')){
       modelFiltered.push({columnName: object.displayName});
     } else {
       modelFiltered.push({columnName: object.columnName});
     }
-  })
+  };
 
-  data.map((row) => {
+  for (const row of data) {
     let dataDict = {}
-    model.map((object) => {
+    for (const object of model){
       if (object.hasOwnProperty('attributes')){
         if (object.attributes.indexOf('dateTime') !== -1){
           const key = object.columnName;
@@ -32,9 +32,9 @@ export default function Table(props){
         const value = row[object.columnName];
         dataDict[key] = value;
       }
-    })
+    }
     dataFiltered.push(dataDict);
-  })
+  }
 
   return(
     <Fragment>
