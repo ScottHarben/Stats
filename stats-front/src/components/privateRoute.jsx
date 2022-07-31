@@ -9,5 +9,5 @@ export default function PrivateRoute({ children }) {
     return loggedIn;
   }
 
-  return checkedForLoggedIn() ? children : <Navigate to="/" />;
+  return checkedForLoggedIn() ? children : <Navigate to="/admin" />;
 }

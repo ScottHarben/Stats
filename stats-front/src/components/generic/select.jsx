@@ -2,7 +2,9 @@ export default function Select(props){
   const {selectItems, selected, label, selectId, classes, handleValueChange} = props;
 
   function handleChange(e) {
-    handleValueChange(e.target.value);
+    if (handleValueChange !== undefined){
+      handleValueChange(e.target.value);
+    }
   }
 
   return(

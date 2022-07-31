@@ -43,6 +43,11 @@ export default function Navbar(props){
                   Tournament
                 </Link>
               </li>
+              <li className="nav-item active">
+                <Link to="/dashboard" className="nav-link" onClick={handleLinkClick}>
+                  Dashboard
+                </Link>
+              </li>
               <li className="nav-item">
                 <Link to="/log" className="nav-link" onClick={handleLinkClick}>
                   Logs
@@ -51,6 +56,16 @@ export default function Navbar(props){
               <li className="nav-item">
                 <Link to="/player" className="nav-link" onClick={handleLinkClick}>
                   Players
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/bets" className="nav-link" onClick={handleLinkClick}>
+                  Bets
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/account" className="nav-link" onClick={handleLinkClick}>
+                  Account
                 </Link>
               </li>
             </ul>

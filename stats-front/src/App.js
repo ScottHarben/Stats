@@ -7,8 +7,10 @@ import Log from "./components/log";
 import Player from "./components/player";
 import PrivateRoute from "./components/privateRoute";
 import Admin from "./components/admin";
-import Footer from "./components/footer";
 import checkStorageForUser from "./components/functions/checkStorageForUser";
+import Bets from "./components/bets";
+import Account from "./components/account";
+import Dashboard from "./components/dashboard";
 
 const baseURL = process.env.NODE_ENV === 'development' ? 
 "http://localhost:9000" : "https://api.playthefade.com";
@@ -35,7 +37,14 @@ export default function App() {
           <Navbar user={user} handleUserChange={handleUserChange}/>
           <div className="container">
             <Routes>
-              <Route path="/" element={<Tournament axios={axios} />} />
+              <Route
+                path="/"
+                element={
+                  <PrivateRoute>
+                    <Tournament axios={axios} />
+                  </PrivateRoute>
+                }
+                />
               <Route path="/admin" element={<Admin axios={axios} handleUserChange={handleUserChange} />} />
               <Route
                 path="/log"
@@ -53,10 +62,33 @@ export default function App() {
                   </PrivateRoute>
                 }
                 />
+              <Route
+                path="/bets"
+                element={
+                  <PrivateRoute>
+                    <Bets axios={axios} />
+                  </PrivateRoute>
+                }
+                />
+              <Route
+                path="/account"
+                element={
+                  <PrivateRoute>
+                    <Account axios={axios} />
+                  </PrivateRoute>
+                }
+                />
+              <Route
+                path="/dashboard"
+                element={
+                  <PrivateRoute>
+                    <Dashboard axios={axios} />
+                  </PrivateRoute>
+                }
+                />
             </Routes>
           </div>
         </div>
-      <Footer />
     </Router>
   );
 };

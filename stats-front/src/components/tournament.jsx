@@ -25,10 +25,10 @@ export default function Log({axios}){
     (async function () {
       try {
         const selectResult = await axios.get("/api/tournament/select");
-        const sessionPermNum = sessionStorage.getItem("permNum");
+        const localPermNum = localStorage.getItem("permNum");
         let permNum = "";
-        if (sessionPermNum) {
-          permNum = sessionPermNum
+        if (localPermNum) {
+          permNum = localPermNum
         } else {
           permNum = selectResult.data[0].Value;
         }
@@ -48,19 +48,19 @@ export default function Log({axios}){
         const startValues = getStartValues(scoreResult.data, bobResult.data);
         const scoreRange = lodash.range(possibleMedianScoreRange.Min,possibleMedianScoreRange.Max+1);
         const bobRange = lodash.range(possibleMedianBoBRange.Min,possibleMedianBoBRange.Max+1);
-        const sessionChecklistStrokes = sessionStorage.getItem("checklistStrokes");
+        const localChecklistStrokes = localStorage.getItem("checklistStrokes");
         let scoreRangeChecks = [];
-        if (sessionChecklistStrokes) {
-          scoreRangeChecks = JSON.parse(sessionChecklistStrokes);
+        if (localChecklistStrokes) {
+          scoreRangeChecks = JSON.parse(localChecklistStrokes);
         } else {
           scoreRangeChecks = scoreRange.map((value) => (
             {Value: value, Checked: value === startValues.InitialStrokes}
           ));
         }
-        const sessionChecklistBoB = sessionStorage.getItem("checklistBoB");
+        const localChecklistBoB = localStorage.getItem("checklistBoB");
         let bobRangeChecks = [];
-        if (sessionChecklistBoB) {
-          bobRangeChecks = JSON.parse(sessionChecklistBoB);
+        if (localChecklistBoB) {
+          bobRangeChecks = JSON.parse(localChecklistBoB);
         } else {
           bobRangeChecks = bobRange.map((value) => (
             {Value: value, Checked: value === startValues.InitialBoB}
@@ -69,20 +69,20 @@ export default function Log({axios}){
         setChecklistStrokes(scoreRangeChecks);
         setChecklistBoB(bobRangeChecks);
         
-        const sessionStatTypeFilter = sessionStorage.getItem("statTypeFilter");
+        const localStatTypeFilter = localStorage.getItem("statTypeFilter");
         let statTypeChecks = [];
-        if (sessionStatTypeFilter) {
-          statTypeChecks = JSON.parse(sessionStatTypeFilter);
+        if (localStatTypeFilter) {
+          statTypeChecks = JSON.parse(localStatTypeFilter);
         } else {
           statTypeChecks = [
             {Value: 'Strokes', Checked: true},
             {Value: 'Birdies Or Better', Checked: true}
           ];
         }
-        const sessionLineTypeFilter = sessionStorage.getItem("lineTypeFilter");
+        const localLineTypeFilter = localStorage.getItem("lineTypeFilter");
         let lineTypeChecks = [];
-        if (sessionLineTypeFilter) {
-          lineTypeChecks = JSON.parse(sessionLineTypeFilter);
+        if (localLineTypeFilter) {
+          lineTypeChecks = JSON.parse(localLineTypeFilter);
         } else {
           lineTypeChecks = [
             {Value: 'Over', Checked: true},
@@ -99,7 +99,7 @@ export default function Log({axios}){
 
   async function getTournamentStats(permNum) {
     try {
-      sessionStorage.setItem("permNum", permNum);
+      localStorage.setItem("permNum", permNum);
 
       const scoreResult = await axios.get("/api/tournament/medianscore", { params: {permNum: permNum}});
       const bobResult = await axios.get("/api/tournament/medianbob", { params: {permNum: permNum}});
@@ -119,10 +119,10 @@ export default function Log({axios}){
       ));
       setChecklistStrokes(scoreRangeChecks);
       setChecklistBoB(bobRangeChecks);
-      sessionStorage.removeItem("checklistStrokes");
-      sessionStorage.removeItem("checklistBoB");
-      sessionStorage.removeItem("statTypeFilter");
-      sessionStorage.removeItem("lineTypeFilter");
+      localStorage.removeItem("checklistStrokes");
+      localStorage.removeItem("checklistBoB");
+      localStorage.removeItem("statTypeFilter");
+      localStorage.removeItem("lineTypeFilter");
     } catch (error) {
       //console.error(error.response.data);
     }
@@ -136,7 +136,7 @@ export default function Log({axios}){
     const currentChecked = newChecklist[objIndex].Checked;
     newChecklist[objIndex].Checked = !currentChecked;
     setChecklistStrokes(newChecklist);
-    sessionStorage.setItem("checklistStrokes", JSON.stringify(newChecklist));
+    localStorage.setItem("checklistStrokes", JSON.stringify(newChecklist));
   }
 
   function handleBoBMedianChange(value){
@@ -147,7 +147,7 @@ export default function Log({axios}){
     const currentChecked = newChecklist[objIndex].Checked;
     newChecklist[objIndex].Checked = !currentChecked;
     setChecklistBoB(newChecklist);
-    sessionStorage.setItem("checklistBoB", JSON.stringify(newChecklist));
+    localStorage.setItem("checklistBoB", JSON.stringify(newChecklist));
   }
 
   function handleStatTypeFilterChange(value){
@@ -158,7 +158,7 @@ export default function Log({axios}){
     const currentChecked = newChecklist[objIndex].Checked;
     newChecklist[objIndex].Checked = !currentChecked;
     setStatTypeFilters(newChecklist);
-    sessionStorage.setItem("statTypeFilter", JSON.stringify(newChecklist));
+    localStorage.setItem("statTypeFilter", JSON.stringify(newChecklist));
   }
 
   function handleLineTypeFilterChange(value){
@@ -169,7 +169,7 @@ export default function Log({axios}){
     const currentChecked = newChecklist[objIndex].Checked;
     newChecklist[objIndex].Checked = !currentChecked;
     setLineTypeFilters(newChecklist);
-    sessionStorage.setItem("lineTypeFilter", JSON.stringify(newChecklist));
+    localStorage.setItem("lineTypeFilter", JSON.stringify(newChecklist));
   }
 
   const model = [

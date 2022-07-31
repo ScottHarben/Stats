@@ -56,7 +56,7 @@ export default function Projections(props){
           <div className="mb-3">
             <h2 className="mt-3 mb-0">Projections</h2><span className="text-muted small">updated: {prizePicksLastUpdated}</span>
           </div>
-          <p className="mb-5">PrizePicks lines not available yet.</p>
+          <p className="mb-5">Data not available yet.</p>
         </div>
       </div>
     )
