@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "pct_favicon.png",
+      "src": "ptf_favicon.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "pct_favicon.png",
+      "src": "ptf_favicon.png",
       "type": "image/png",
       "sizes": "512x512"
     }

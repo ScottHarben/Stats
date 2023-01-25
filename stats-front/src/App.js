@@ -8,9 +8,6 @@ import Player from "./components/player";
 import PrivateRoute from "./components/privateRoute";
 import Admin from "./components/admin";
 import checkStorageForUser from "./components/functions/checkStorageForUser";
-import Bets from "./components/bets";
-import Account from "./components/account";
-import Dashboard from "./components/dashboard";
 
 const baseURL = process.env.NODE_ENV === 'development' ? 
 "http://localhost:9000" : "https://api.playthefade.com";
@@ -59,30 +56,6 @@ export default function App() {
                 element={
                   <PrivateRoute>
                     <Player axios={axios} />
-                  </PrivateRoute>
-                }
-                />
-              <Route
-                path="/bets"
-                element={
-                  <PrivateRoute>
-                    <Bets axios={axios} />
-                  </PrivateRoute>
-                }
-                />
-              <Route
-                path="/account"
-                element={
-                  <PrivateRoute>
-                    <Account axios={axios} />
-                  </PrivateRoute>
-                }
-                />
-              <Route
-                path="/dashboard"
-                element={
-                  <PrivateRoute>
-                    <Dashboard axios={axios} />
                   </PrivateRoute>
                 }
                 />
