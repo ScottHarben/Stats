@@ -135,7 +135,7 @@ export default function Player({axios}){
             <button href="#" className="btn btn-primary" onClick={() => assignPlayer(pgaPlayer.PlayerId, prizePicksPlayer.PrizePicksPlayerId)}>Submit</button>
           </div>
         </div> 
-        <button className="btn btn-primary mt-3" onClick={() => rebuildProjections()}>Rebuild Projections</button>
+        {/* <button className="btn btn-primary mt-3" onClick={() => rebuildProjections()}>Rebuild Projections</button> */}
       </div>
     </div>
   );
