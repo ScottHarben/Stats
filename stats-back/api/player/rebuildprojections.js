@@ -8,7 +8,7 @@ const connection = db.dbConnection();
 connection.connect();
 
 rebuildProjectionsRouter.post("/", (req, res) => {
-  const token = req.headers["x-access-token", "Access-Control-Allow-Origin"];
+  const token = req.headers["x-access-token"];
   if (token) {
     jwt.verify(token, "superSecret", (err, decoded) => {
       if (err) console.log(err);
